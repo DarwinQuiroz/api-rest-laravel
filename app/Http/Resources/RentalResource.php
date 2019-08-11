@@ -15,10 +15,12 @@ class RentalResource extends JsonResource
      */
     public function toArray($request)
     {
+        $customer = new CustomerResource($this->customer);
+        $status = new RentalStatusResource($this->rental_status);
         return [
             'id' => $this->id,
             'customer' => new CustomerResource($this->customer),
-            'status' => new RentalStatusResource($this->rental_status),
+            'status' => $status->status,
             'vehicle' => new VehicleResource($this->vehicle),
             'from' => Carbon::createFromFormat('Y-m-d H:i:s', $this->from)->format('d-m-Y'),
             'to' => Carbon::createFromFormat('Y-m-d H:i:s', $this->to)->format('d-m-Y')
